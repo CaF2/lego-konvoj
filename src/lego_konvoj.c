@@ -1,37 +1,41 @@
-/* speedtest.c */ 
+/**
+	@author GRUPP1 (KTH)
+*/
 #include <stdlib.h> 
 #include "kernel.h"
 #include "kernel_id.h"
 #include "ecrobot_interface.h"
 
-/* OSEK declarations */
+/**
+	OSEK Declaration of task 1
+*/
 DeclareTask(Task1);
 
-/* LEJOS OSEK hooks */
-void ecrobot_device_initialize()
+/**
+	For the init of the robot
+*/
+void ecrobot_device_initialize(void)
 {
 	ecrobot_init_sonar_sensor(NXT_PORT_S4);	
 }
-void ecrobot_device_terminate()
+
+/**
+	Function to handle the termination of the robot
+*/
+void ecrobot_device_terminate(void)
 {
 	ecrobot_term_sonar_sensor(NXT_PORT_S4);	
 }
-void user_1ms_isr_type2(void){}
 
-/* Sub functions */
+void user_1ms_isr_type2(void);
+
+/*
 int getRandom(int min, int max)
 {
 	return min + (int)((double)rand()*(max-min+1.0)/(1.0+RAND_MAX));
 }
+*/
 
-/* 
- * LEJOS OSEK V1.07 has an interrupt based LCD display feature thanks to LEJOS NXJ develpment team.
- * Therefore, LCD display performance is dramatically improved. Actually, LCD update is too
- * fast to see. The purpose of this speed test is to measure the performance of LEJOS OSEK under
- * a common program load compared to other programming languages. (The maximum LCD refresh rate
- * on hardware level is 60Hz, so faster refresh rate than 60Hz has no meaning in practical use.)
- * So the result could be seen only at the end of the test
- */
 void disp(int row, char *str, int val)
 {
 #define DISPLAY_ON
@@ -59,19 +63,19 @@ TASK(Task1)
 
 	do
 	{
-		light = (int)ecrobot_get_light_sensor(NXT_PORT_S3);	/* Read Light Sensor                 */
-		disp(0, " ADC: ", light);							/* Display Light Sensor              */
-		sonar = ecrobot_get_sonar_sensor(NXT_PORT_S4); 		/* Read US Sensor                    */
-		disp(1, " I2C: ", sonar);							/* Display US Sensor                 */
-		rev = nxt_motor_get_count(NXT_PORT_B);	 			/* Read Rotation Sensor              */
+		light = (int)ecrobot_get_light_sensor(NXT_PORT_S3);
+		disp(0, " ADC: ", light);
+		sonar = ecrobot_get_sonar_sensor(NXT_PORT_S4);
+		disp(1, " I2C: ", sonar);
+		//rev = nxt_motor_get_count(NXT_PORT_B);
 		
 		//display_string(const char *str)
-		
-		//disp(2, " REV: ", rev);								/* Display Rotation Sensor           */
-		RN = getRandom(1,100); /* Get random number (1-100)         */
-		//disp(3, "  RN: ", RN); /* Display random number             */
-		//disp(4, " VAL: ", (light+sonar+rev)*100/RN); /* Display VAL                       */
-		nxt_motor_set_speed(NXT_PORT_B, RN, 1); /* Set motor speed for B and C to RN */
+		/*
+		//disp(2, " REV: ", rev); //Display Rotation Sensor
+		RN = getRandom(1,100); //Get random number (1-100)
+		//disp(3, "  RN: ", RN); //Display random number
+		//disp(4, " VAL: ", (light+sonar+rev)*100/RN); //Display VAL
+		nxt_motor_set_speed(NXT_PORT_B, RN, 1); //Set motor speed for B and C to RN
 		nxt_motor_set_speed(NXT_PORT_C, RN, 1);
 		
 		if(RN > 50) 
@@ -79,17 +83,17 @@ TASK(Task1)
 		else if(RN < 50) 
 			A--;
 		
-		//disp(5, "   A: ", A); /* Display A                         */
-		nxt_motor_set_speed(NXT_PORT_A, A, 1); /* Set motor A speed to A            */
+		//disp(5, "   A: ", A); //Display A
+		nxt_motor_set_speed(NXT_PORT_A, A, 1); //Set motor A speed to A
 		
-		//disp(6, "LOOP: ", loop_cnt++); /* Display loop count                */
-		//disp(7, "TIME: ", systick_get_ms()/1000);	/* Display time in seconds           */
-		
+		//disp(6, "LOOP: ", loop_cnt++); //Display loop count
+		//disp(7, "TIME: ", systick_get_ms()/1000);	//Display time in seconds
+		*/
 		systick_wait_ms(200);
 		
-	} while(systick_get_ms() < time_out);	/* Loop for 60 seconds               */
-
-	nxt_motor_set_speed(NXT_PORT_A, 0, 1); /* Stop motors                       */
+	} while(systick_get_ms() < time_out);	//Loop for 60 seconds
+	/*
+	nxt_motor_set_speed(NXT_PORT_A, 0, 1);
 	nxt_motor_set_speed(NXT_PORT_B, 0, 1);
 	nxt_motor_set_speed(NXT_PORT_C, 0, 1);
 
@@ -129,7 +133,7 @@ TASK(Task1)
 
 	display_update();
 
-	systick_wait_ms(10000);	/* Show display for 10 seconds       */
-	
+	systick_wait_ms(10000);
+	*/
 	TerminateTask();
 }
