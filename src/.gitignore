@@ -31,6 +31,9 @@
 .cproject
 .cdtproject
 .project
+implementation.oil
+kernel_cfg.c
+kernel_id.h
 NeXTTool
 
 #folder

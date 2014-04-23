@@ -2,6 +2,7 @@
 	@author GRUPP1 (KTH)
 */
 #include <stdlib.h> 
+#include "general.c"
 #include "kernel.h"
 #include "kernel_id.h"
 #include "ecrobot_interface.h"
@@ -27,7 +28,7 @@ void ecrobot_device_terminate(void)
 	ecrobot_term_sonar_sensor(NXT_PORT_S4);	
 }
 
-void user_1ms_isr_type2(void);
+void user_1ms_isr_type2(void){}
 
 /*
 int getRandom(int min, int max)
@@ -61,12 +62,31 @@ TASK(Task1)
 	
 	time_out = systick_get_ms() + 60000;
 
-	do
+	while(1)//do
 	{
 		light = (int)ecrobot_get_light_sensor(NXT_PORT_S3);
-		disp(0, " ADC: ", light);
+		//disp(0, " ADC: ", light);
 		sonar = ecrobot_get_sonar_sensor(NXT_PORT_S4);
-		disp(1, " I2C: ", sonar);
+		//disp(1, " I2C: ", sonar);
+		
+		char *lightbuff=b_int_to_string(light);
+		char *printstr1=concat("light: ",lightbuff,NULL);
+		
+		char *sonarbuff=b_int_to_string(sonar);
+		char *printstr2=concat("sonar: ",sonarbuff,NULL);
+		
+		display_clear(0);
+		display_goto_xy(0, 0);
+		display_string(printstr1);
+		display_goto_xy(0, 1);
+		display_string(printstr2);
+		display_update();
+		
+		free(lightbuff);
+		free(printstr1);
+		free(sonarbuff);
+		free(printstr2);
+		
 		//rev = nxt_motor_get_count(NXT_PORT_B);
 		
 		//display_string(const char *str)
@@ -91,7 +111,7 @@ TASK(Task1)
 		*/
 		systick_wait_ms(200);
 		
-	} while(systick_get_ms() < time_out);	//Loop for 60 seconds
+	}//while(systick_get_ms() < time_out);	//Loop for 60 seconds
 	/*
 	nxt_motor_set_speed(NXT_PORT_A, 0, 1);
 	nxt_motor_set_speed(NXT_PORT_B, 0, 1);

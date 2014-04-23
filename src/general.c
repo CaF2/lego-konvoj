@@ -1,3 +1,6 @@
+#include <stdarg.h>
+#include <string.h>
+
 /**
 	Will make a new concentrated string, ( @param logical str+str+str+... )
 	
@@ -37,4 +40,56 @@ char *concat(const char *str, ...)
 	va_end (ap2);
      
 	return result;
+}
+
+/**
+	Fast log(num)/log(10)
+	
+	@param num .
+		the value to calculate
+	@return
+		the successful value
+*/
+int log10s(int num)
+{
+	int res=0;
+	while(num>=10)
+	{
+		num=(num/10);
+		res++;
+	}
+	return res;
+}
+
+/**
+	Converts int to string
+	
+	@param num .
+		The value to convert
+	@return NEW
+		returns pointer to the new string
+*/
+char* b_int_to_string(int num)
+{
+	int isNegative=0;
+	if(num<0)
+	{
+		isNegative=1;
+		num=-num;
+	}
+	int i=0,length=log10s(num);
+	i=length;
+	char* endS=(char*)malloc((length+2+isNegative)*8);
+	endS[i+1+isNegative]='\0';
+	if(isNegative)
+	{
+		endS[0]='-';
+	}
+	while(0<=i)
+	{
+		endS[i+isNegative]='0'+num%10;
+		num=(int)(num/10);
+		i--;
+	}
+	return endS;
 }
