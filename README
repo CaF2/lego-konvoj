@@ -1,5 +1,8 @@
 This is the main program to controll a convoy system of lego robots.
 
-No license is published yet, neither is any code, this program is a work in progress.
+The robots are designed with 2 ultrasonic sensor, which is placed diagonally, like an ant, or a lizards tounge.
+It should also have 2 wheels.
+
+For license see the document 'license'
 
 In case you want to modify something, please contact me at mail at florevald@gmail.com.
