@@ -1,3 +1,5 @@
+This branch indicates that this was the final one after the course
+
 This is the main program to controll a convoy system of lego robots.
 
 The robots are designed with 2 ultrasonic sensor, which is placed diagonally, like an ant, or a lizards tounge.
